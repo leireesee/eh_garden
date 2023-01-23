@@ -6,6 +6,7 @@ import java.sql.Statement;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class GestorArboles {
@@ -78,15 +79,46 @@ public class GestorArboles {
 					System.out.println("Has elegido eliminar arbol");
 					System.out.println("Introduce la id del arbol que quieres eliminar");
 					String id_eliminar = teclado.nextLine();
-
+					String sentenciaBorro = "DELETE FROM arboles WHERE `arboles`.`id` = " + id_eliminar;
+					st.execute(sentenciaBorro);
 					break;
 				case MODIFICAR_ARBOL:
 					System.out.println("Has elegido modificar arbol");
-
+					
+					System.out.println("Introduce la ID del arbol a modificar");
+					String id_modificar = teclado.nextLine();
+					
+					System.out.println("Introduce el nuevo nombre comun");
+					String nombreComunIntro2 = teclado.nextLine();
+					
+					System.out.println("Introduce el nuevo nombre cientifico");
+					String nombreCientificoIntro2 = teclado.nextLine();
+					
+					System.out.println("Introduce el nuevo habitat");
+					String habitatIntro2 = teclado.nextLine();
+					
+					System.out.println("Introduce la nueva altura");
+					int alturaIntro2 = Integer.parseInt(teclado.nextLine());
+					
+					System.out.println("Introduce el nuevo origen");
+					String origenIntro2 = teclado.nextLine();
+					
+					
+					String sentenciaModificar = "UPDATE arboles SET nombre_comun = '" + nombreComunIntro2 + "', nombre_cientifico = '" + nombreCientificoIntro2 + "', habitat = '" + habitatIntro2 + "', altura = " + alturaIntro2 + ", origen = '" + origenIntro2 + "' WHERE id = " + id_modificar;
+					
+					st.executeUpdate(sentenciaModificar);
 					break;
 				case VISUALIZAR_ARBOLES:
 					System.out.println("Has elegido visualizar arboles");
-
+					ResultSet rSet = st.executeQuery("SELECT * FROM arboles");
+					while (rSet.next()) {
+						System.out.println(rSet.getInt("id"));
+						System.out.println(rSet.getString("nombre_comun"));
+						System.out.println(rSet.getString("nombre_cientifico"));
+						System.out.println(rSet.getString("habitat"));
+						System.out.println(rSet.getInt("altura"));
+						System.out.println(rSet.getString("origen"));
+					}
 					break;
 				case SALIR:
 					System.out.println("ADIOS");
