@@ -1,5 +1,6 @@
 package clases;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import java.sql.Statement;
@@ -17,6 +18,7 @@ public class GestorArboles {
 
 		Connection conexion = null;
 		Statement st = null;
+		ArrayList<Arbol> arboles = new ArrayList<>();
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -141,12 +143,19 @@ public class GestorArboles {
 					System.out.println("Has elegido visualizar arboles");
 					ResultSet rSet = st.executeQuery("SELECT * FROM arboles");
 					while (rSet.next()) {
-						System.out.println(rSet.getInt("id"));
-						System.out.println(rSet.getString("nombre_comun"));
-						System.out.println(rSet.getString("nombre_cientifico"));
-						System.out.println(rSet.getString("habitat"));
-						System.out.println(rSet.getInt("altura"));
-						System.out.println(rSet.getString("origen"));
+						Arbol arbol3 = new Arbol();
+						arbol3.setId(rSet.getInt("id"));
+						arbol3.setNombreComun(rSet.getString("nombre_comun"));
+						arbol3.setNombreCientifico(rSet.getString("nombre_cientifico"));
+						arbol3.setHabitat(rSet.getString("habitat"));
+						arbol3.setAltura(rSet.getInt("altura"));
+						arbol3.setOrigen(rSet.getString("origen"));
+						
+						arboles.add(arbol3);
+					}
+					
+					for (Arbol arbol3 : arboles) {
+						System.out.println(arbol3.getId() + "," + arbol3.getNombreComun() + "," + arbol3.getNombreCientifico() + "," + arbol3.getHabitat() + "," + arbol3.getAltura() + "," + arbol3.getOrigen());
 					}
 					break;
 				case SALIR:
